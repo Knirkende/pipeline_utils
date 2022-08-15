@@ -1,3 +1,3 @@
 # pipeline_utils
 
-Utilities for automated initialiasation and deployment of small web applications.
+Utilities for automated initialisation and deployment of small web applications.
