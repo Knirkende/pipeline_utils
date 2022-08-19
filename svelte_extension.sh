@@ -5,9 +5,9 @@
 #* Written by Ole Holgernes.                        *
 #****************************************************
 
-#-> make sure user is root
+#-> make sure user is superuser
 if [ "$EUID" -ne 0 ]
-  then echo "Please run as root"
+  then echo "Please run as superuser"
   exit
 fi
 
