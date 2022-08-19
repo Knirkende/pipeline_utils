@@ -42,7 +42,7 @@ if [[ "$configure_vscode" -eq 1 ]]; then
     mkdir .vscode
     cat <<EOT >> .vscode/settings.json
 {
-    "python.defaultInterpreterPath": "$(echo $pipenv_path)",
+    "python.defaultInterpreterPath": "$(echo \$pipenv_path)",
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
@@ -82,7 +82,7 @@ FROM base AS runtime
 #copy virtual env from python-deps stage 
 #/.venv location is set by PIPENV_VENV_IN_PROJECT
 COPY --from=python-deps /.venv /.venv
-ENV PATH="/.venv/bin:$PATH"
+ENV PATH="/.venv/bin:\$PATH"
 
 # install application into container
 COPY . .
