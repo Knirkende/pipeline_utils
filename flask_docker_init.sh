@@ -21,6 +21,8 @@ if [[ "$create_repo" -eq 1 ]]; then
     cat <<EOT >> .gitignore
 __pycache__/
 .venv/
+.devcontainer/
+.vsconfig/
 EOT
 else
     echo "Skipping git init"
@@ -59,6 +61,8 @@ fi
 if [[ "$containerize" -eq 1 ]]; then
     python3 -m pipenv install gunicorn
     touch Dockerfile .dockerignore
+    mkdir .devcontainer
+    touch .devcontainer/devcontainer.json
     cat <<EOT >> Dockerfile
 FROM python:3.8-slim-buster AS base
 
@@ -88,6 +92,18 @@ WORKDIR /app/
 EXPOSE 8000
 ENTRYPOINT ["gunicorn", "-c", "gunicorn.conf.py", "main:app"]
 EOT
+#-> configure vscode devcontainer
+    if [[ "$configure_vscode" -eq 1 ]]; then
+        cat <<EOT >> .devcontainer/devcontainer.json
+{
+	"name": "Base Flask Container",
+	"context": "..",
+	"dockerFile": "../Dockerfile"
+}
+EOT
+    else
+        echo "Skipping vscode .devcontainer config"
+    fi
 else
     echo "Skipping dockerfile"
 fi
