@@ -5,6 +5,12 @@
 #* Written by Ole Holgernes.                        *
 #****************************************************
 
+#-> make sure user is root
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+
 #-> replace main.py file
 rm app/main.py
 touch app/main.py
